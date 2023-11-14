@@ -290,6 +290,10 @@ class IntArray:
         # This new insert method has to be able to insert a new element at whatever position/index of the array.
         # For that a new array has to be created and the old content has to be copied making room for the new value
 
+        """
+        Insert a new element at any index of the array.
+        """
+
         if not isinstance(val, int) or not self._min_val <= val <= self._max_val:
             raise TypeError(
                 "Value must be an integer between {self._min_val} and {self._max_val}"
@@ -322,14 +326,61 @@ class IntArray:
         # Store the new value
         self.__setitem__(index, val)
 
+    def remove(self, index: int) -> int | None:
+        """
+        Remove an element from any index of the array and return its value
+        """
 
-def main():
+        if not isinstance(index, int) or not 0 <= index < self.__len__():
+            raise IndexError("Index out of range")
+
+        if self.__len__() == 0:
+            return None
+
+        val = self.__getitem__(index)
+
+        self._size -= 1
+
+        # Reserve memory only if array is not empty
+        if self.__len__() > 0:
+            new_resmem = ReservedMemory(self._size * self._bytes_per_element)
+
+            new_resmem.copy(self._resmem, count=index * self._bytes_per_element)
+
+            new_resmem.copy(
+                self._resmem,
+                count=(self._size - index) * self._bytes_per_element,
+                source_index=(index + 1) * self._bytes_per_element,
+                destination_index=index * self._bytes_per_element,
+            )
+        else:
+            new_resmem = None
+
+        self._resmem = new_resmem
+
+        return val
+
+
+def insert_element():
     array = IntArray()
     for i in range(6):
         array.append(i)
     print(array)
     array.insert(5, 10)
     print(array)  # IntArray (7 elements): [0, 1, 2, 3, 4, 10, 5]
+
+
+def remove_element():
+    array = IntArray()
+    for i in range(6):
+        array.append(i)
+    print(array)
+    val = array.remove(3)
+    print(val, array)  # 3 IntArray (5 elements): [0, 1, 2, 4, 5]
+
+
+def main():
+    remove_element()
 
 
 if __name__ == "__main__":
