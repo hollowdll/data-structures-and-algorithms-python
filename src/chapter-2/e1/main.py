@@ -360,6 +360,26 @@ class IntArray:
 
         return val
 
+    def search(self, value: int) -> int:
+        """
+        Search method for the array
+
+        Parameters:
+        - 'value': value to search
+
+        Returns:
+          First index position where the value is found or -1 if not found
+        """
+
+        if not isinstance(value, int):
+            raise TypeError("Value must be int")
+
+        for i in range(self._size):
+            if self.__getitem__(i) == value:
+                return i
+            
+        return -1
+
 
 def insert_element():
     array = IntArray()
@@ -379,8 +399,17 @@ def remove_element():
     print(val, array)  # 3 IntArray (5 elements): [0, 1, 2, 4, 5]
 
 
+def search_element():
+    array = IntArray()
+    for i in range(6):
+        array.append(i+i)
+
+    print(array)
+    print(array.search("a"))  # 4
+
+
 def main():
-    remove_element()
+    search_element()
 
 
 if __name__ == "__main__":
