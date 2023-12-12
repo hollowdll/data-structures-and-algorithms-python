@@ -1,5 +1,6 @@
 from e1 import Stack
 from e2 import check_balance
+from e3 import StackBasedQueue
 
 def main():
     e2()
