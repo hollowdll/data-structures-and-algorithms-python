@@ -79,3 +79,31 @@ class Tree():
                 current_node = current_node._right_child
 
         return None
+    
+    def find_minimum(self):
+        """
+        Returns the node containing the minimum value of the tree
+        """
+        
+        current_node = self._root_node
+        while current_node:
+            if current_node._left_child is None:
+                return current_node
+            
+            current_node = current_node._left_child
+
+        return None
+
+    def find_maximum(self):
+        """
+        Returns the node containing the maximum value of the tree
+        """
+        
+        current_node = self._root_node
+        while current_node:
+            if current_node._right_child is None:
+                return current_node
+            
+            current_node = current_node._right_child
+
+        return None
