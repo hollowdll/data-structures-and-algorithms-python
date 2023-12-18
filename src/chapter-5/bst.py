@@ -107,3 +107,33 @@ class Tree():
             current_node = current_node._right_child
 
         return None
+    
+    def _detach_node(self, node):
+        """
+        Detach a node from the tree. Node to be detached has one child at most.
+        An error will be raised otherwise.
+        """
+        
+        if node._left_child and node._right_child:
+            raise(ValueError('Node has two children'))
+        
+        parent = node._parent
+        if node._left_child:
+            child = node._left_child
+        else:
+            child = node._right_child
+
+        if not parent and not child:
+            self._root_node = None
+            return None
+        
+        if parent:
+            if parent._left_child == node:
+                parent._left_child = child
+            elif parent._right_child == node:
+                parent._right_child = child
+
+        if child:
+            if not parent:
+                self._root_node = child
+            child._parent = parent
