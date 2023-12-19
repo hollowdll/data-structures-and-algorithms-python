@@ -189,3 +189,20 @@ class Tree():
             current = current._left_child
 
         return current
+    
+    def __bst_successor_full(self, node):
+        if node._right_child:
+            current = node._right_child
+            while current._left_child:
+                current = current._left_child
+
+            return current
+        
+        # if node doesn't have right child
+        parent = node._parent
+        current = node
+        while parent and current == parent._right_child:
+            current = parent
+            parent = parent._parent
+
+        return parent
