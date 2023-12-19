@@ -137,3 +137,55 @@ class Tree():
             if not parent:
                 self._root_node = child
             child._parent = parent
+
+    def delete_node(self, data):
+        """
+        Delete the node containing the data.
+
+        The algorithm is based on this: https://en.wikipedia.org/wiki/Binary_search_tree#Deletion
+
+        Parameters:
+        - 'data': The data to be found.
+        """
+        node_to_remove = self._find(data)
+        if not node_to_remove:
+            return
+        
+        if not node_to_remove._left_child:
+            self.__shift_nodes(node_to_remove, node_to_remove._right_child)
+        elif not node_to_remove._right_child:
+            self.__shift_nodes(node_to_remove, node_to_remove._left_child)
+        else:
+            successor = self.__bst_successor(node_to_remove)
+            if successor._parent != node_to_remove:
+                self.__shift_nodes(successor, successor._right_child)
+                successor._right_child = node_to_remove._right_child
+                successor._right_child._parent = successor
+
+            self.__shift_nodes(node_to_remove, successor)
+            successor._left_child = node_to_remove._left_child
+            successor._left_child._parent = successor
+    
+    def __shift_nodes(self, node, right_node):
+        """
+        Shifts nodes in the BST.
+        """
+        if not node._parent:
+            self._root_node = right_node
+        elif node == node._parent._left_child:
+            node._parent._left_child = right_node
+        else:
+            node._parent._right_child = right_node
+
+        if right_node:
+            right_node._parent = node._parent
+
+    def __bst_successor(self, node):
+        """
+        Finds the successor node of a node.
+        """
+        current = node._right_child
+        while current and current._left_child:
+            current = current._left_child
+
+        return current
