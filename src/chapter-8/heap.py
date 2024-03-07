@@ -70,28 +70,56 @@ class Heap:
             else:
                 return
             
-    def binary_search_iterative(array, value):
-        """
-        Performs a binary search in the the array for the given value
-        
-        Parameters:
-        - array: The array where to perform the search
-        - value: The value being searched
-        
-        Returns: The index of the value if it is found or None if it is not found.
-        """
+def binary_search_iterative(array, value):
+    """
+    Performs a binary search in the the array for the given value
+    
+    Parameters:
+    - array: The array where to perform the search
+    - value: The value being searched
+    
+    Returns: The index of the value if it is found or None if it is not found.
+    """
+    start = 0
+    end = len(array) - 1
+
+    while start <= end:
+        mid = start + (end - start + 1) // 2
+
+        if array[mid] == value:
+            return mid
+        elif value < array[mid]:    # check left half
+            end = mid - 1
+        elif value > array[mid]:    # check right half
+            start = mid + 1
+
+    return None
+
+def interpolation_search(array, value, start=None, end=None):
+    """
+    Performs an Interpolation search in the the array for the given value
+    
+    Parameters:
+    - array: The array where to perform the search
+    - value: The value being searched
+    
+    Returns: The index of the value if it is found or None if it is not found.
+    """
+    if start is None:
         start = 0
+    if end is None:
         end = len(array) - 1
 
-        while start <= end:
-            mid = start + (end - start + 1) // 2
+    mid = start + int((end - start) * ((value - array[start]) / (array[end] - array[start])))
 
-            if array[mid] == value:
-                return mid
-            elif value < array[mid]:    # check left half
-                end = mid - 1
-            elif value > array[mid]:    # check right half
-                start = mid + 1
-
+    if mid > end or mid < start:
         return None
 
+    if value == array[mid]:
+        return mid
+    elif value < array[mid] and mid >= start + 1:
+        return interpolation_search(array, value, start=start, end=mid-1)
+    elif value > array[mid] and mid <= end - 1:
+        return interpolation_search(array, value, start=mid+1, end=end)
+    
+    return None
