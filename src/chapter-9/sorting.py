@@ -17,3 +17,23 @@ def insertion_sort(array):
             insert_pos -= 1
 
         array[insert_pos] = key
+
+def quick_sort(array):
+    if len(array) <= 1:
+        return array
+    
+    pivot_index = len(array) // 2
+    pivot = array[pivot_index]
+    left = []
+    right = []
+
+    for i in range(len(array)):
+        if i == pivot_index:
+            continue
+        elif array[i] <= pivot:
+            left.append(array[i])
+        else:
+            right.append(array[i])
+    
+    return quick_sort(left) + [pivot] + quick_sort(right)
+    
