@@ -36,4 +36,42 @@ def quick_sort(array):
             right.append(array[i])
     
     return quick_sort(left) + [pivot] + quick_sort(right)
+
+def sift_down(array, start, end):
+    """
+    This function sinks (if necessary) the given node of a MaxHeap structure
+    
+    Parameters:
+    - array: The heap array
+    - start: The index of the node that should be sinked.
+    - end: The end of the heap inside the array. The index of the last node
+    
+    Returns: None
+    """
+
+    # left child index: 2 * current_index + 1
+    # right child index: 2 * current_index + 2
+
+    current_index = start
+
+    # repeat while there is a left child
+    while 2*current_index+1 <= end:
+        swap_index = current_index
+        left_index = 2*current_index+1
+        right_index = 2*current_index+2
+
+        if array[left_index] > array[current_index]:
+            swap_index = left_index
+
+        # if right child exists
+        if right_index <= end:
+            if array[right_index] > array[swap_index]:
+                swap_index = right_index
+
+        # if child node is bigger than the current node
+        if array[swap_index] > array[current_index]:
+            array[current_index], array[swap_index] = array[swap_index], array[current_index]
+            current_index = swap_index
+        else:
+            return
     
