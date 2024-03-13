@@ -74,4 +74,25 @@ def sift_down(array, start, end):
             current_index = swap_index
         else:
             return
+        
+def heap_sort(array):
+    """
+    Sorts the array using the Heapsort algorithm
     
+    Parameters:
+    - array: The array to be sorted
+    
+    Returns: Nothing. The array is sorted in-place.
+    """
+    end = len(array) - 1
+    # Start sinking from this index. Indices after this are leaves which don't need to be sunk.
+    sink_start = len(array) // 2 - 1
+
+    # Sink the array first so it becomes Max Heap
+    for start in range(sink_start, -1, -1):
+        sift_down(array, start, end)
+
+    while end > 0:
+        array[0], array[end] = array[end], array[0]
+        end -= 1
+        sift_down(array, 0, end)
