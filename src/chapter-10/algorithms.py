@@ -34,3 +34,24 @@ def merge_sort(array):
         merged_array.extend(right_half[right_index:])
 
     return merged_array
+
+def fib(n):
+    """
+    Calculate the Fibonacci's series value for integer n
+    
+    Parameters:
+    - n: The number to use in the Fibonacci's series.
+    
+    Returns: The calculated value of the Fibonacci's series for n
+    """
+    if n < 2:
+        return 1
+
+    a = 1   # n - 1
+    b = 1   # n - 2
+
+    for _ in range(n-1):
+        result = a + b
+        a, b = result, a
+
+    return result
