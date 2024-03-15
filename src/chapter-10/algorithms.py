@@ -37,7 +37,8 @@ def merge_sort(array):
 
 def fib(n):
     """
-    Calculate the Fibonacci's series value for integer n
+    Calculate the Fibonacci's series value for integer n.
+    This solution uses tabulation to calculate the result bottom-up.
     
     Parameters:
     - n: The number to use in the Fibonacci's series.
